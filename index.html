@@ -1,42 +1,469 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông báo hệ thống</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f8d7da; /* Nền màu đỏ nhạt cảnh báo */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .message-box {
-            text-align: center;
-            padding: 50px;
-            background-color: #ffffff;
-            border: 3px solid #dc3545; /* Viền đỏ đậm */
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-        h1 {
-            color: #dc3545; 
-            font-size: 3.5em;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.2em;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Từ Vựng Tiếng Anh Khối 10 (Unit 1 & Unit 2)</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 25px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 720px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 22px;
+      color: #312e81;
+      margin-top: 0;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #e0e7ff;
+      padding-bottom: 10px;
+    }
+    .filter-box {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    select {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #c7d2fe;
+      background: #eef2ff;
+      font-weight: bold;
+      color: #3730a3;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 15px 0;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .badge {
+      background-color: #4f46e5;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .word {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1e1b4b;
+      margin: 5px 0;
+    }
+    .phonetic {
+      font-size: 16px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .audio-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .audio-btn:hover { transform: scale(1.2); }
+    
+    /* Khu vực kiểm tra chính tả */
+    .practice-box {
+      width: 100%;
+      margin-top: 10px;
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      text-align: left;
+    }
+    .practice-box label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #475569;
+      display: block;
+      margin-top: 8px;
+    }
+    .practice-box input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 3px;
+    }
+    .feedback {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      display: none;
+      white-space: pre-line;
+    }
+    .feedback.correct { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .feedback.incorrect { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .answer-box {
+      border-top: 2px dashed #cbd5e0;
+      width: 100%;
+      padding-top: 12px;
+      margin-top: 12px;
+      text-align: left;
+    }
+    .meaning {
+      font-size: 18px;
+      font-weight: bold;
+      color: #15803d;
+      margin-bottom: 6px;
+    }
+    .grammar {
+      font-size: 14px;
+      color: #334155;
+      background: #f1f5f9;
+      padding: 10px;
+      border-radius: 8px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    button.action-btn {
+      flex: 1;
+      min-width: 130px;
+      padding: 10px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-random { background: #4f46e5; color: white; }
+    .btn-random:hover { background: #4338ca; }
+    .btn-check { background: #d97706; color: white; }
+    .btn-check:hover { background: #b45309; }
+    .btn-answer { background: #16a34a; color: white; }
+    .btn-answer:hover { background: #15803d; }
+    .counter { font-size: 13px; color: #64748b; margin-bottom: 5px; }
+  </style>
 </head>
 <body>
-    <div class="message-box">
-        <h1>BẠN ĐÃ BỊ LỪA!</h1>
-        
+
+  <div class="container">
+    <h1>📚 Quiz Từ Vựng & Kiểm Tra Chính Tả tiếng Anh</h1>
+    
+    <div class="filter-box">
+      <label for="sectionSelect"><b>Chọn phần ôn tập:</b></label>
+      <select id="sectionSelect" onchange="filterSection()">
+        <option value="all">Tất cả các phần</option>
+        <option value="u1p1">Unit 1 - Phần 1 (Từ 1 - 15)</option>
+        <option value="u1p2">Unit 1 - Phần 2 (Từ 16 - 29)</option>
+        <option value="u1p3">Unit 1 - Phần 3 (Từ 30 - 47)</option>
+        <option value="u1p4">Unit 1 - Phần 4 (Từ 48 - 55)</option>
+        <option value="u1p5">Unit 1 - Phần 5 (Từ 56 - 68)</option>
+        <option value="u1p6">Unit 1 - Phần 6 (Từ 69 - 78)</option>
+        <option value="u1p7">Unit 1 - Phần 7 (Từ 79 - 87)</option>
+        <option value="u2p1">Unit 2 - Phần 1 (Từ 1 - 14)</option>
+      </select>
     </div>
+
+    <div id="counter" class="counter">Số từ trong phần này: 0</div>
+
+    <div class="card">
+      <div id="question-area">
+        <p id="prompt">Nhấn <b>"Từ Ngẫu Nhiên"</b> để bắt đầu!</p>
+      </div>
+
+      <div id="word-detail" style="display:none; width:100%;">
+        <span id="type" class="badge">vp</span>
+        <div class="word">
+          <span id="word">word</span>
+          <button class="audio-btn" onclick="speakWord()" title="Nghe phát âm">🔊</button>
+        </div>
+        <div id="phonetic" class="phonetic">/phonetic/</div>
+
+        <!-- Ô thực hành gõ kiểm tra chính tả -->
+        <div class="practice-box">
+          <label for="userWord">✍️ Gõ lại từ Tiếng Anh (Kiểm tra chính tả):</label>
+          <input type="text" id="userWord" placeholder="Nhập từ Tiếng Anh..." autocomplete="off">
+          
+          <label for="userType">🏷️ Loại từ (vd: n, v, a, adv, vp, np):</label>
+          <input type="text" id="userType" placeholder="Nhập loại từ..." autocomplete="off">
+
+          <label for="userGrammar">📝 Cụm đi kèm / Ngữ pháp (tùy chọn):</label>
+          <input type="text" id="userGrammar" placeholder="Nhập cụm từ hoặc cấu trúc..." autocomplete="off">
+
+          <div id="feedback" class="feedback"></div>
+        </div>
+      </div>
+
+      <div id="answer-box" class="answer-box" style="display:none;">
+        <div id="meaning" class="meaning">Nghĩa: ...</div>
+        <div id="grammar" class="grammar">Ghi chú / Cấu trúc: ...</div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="action-btn btn-random" onclick="randomWord()">Từ Ngẫu Nhiên</button>
+      <button class="action-btn btn-check" onclick="checkSpelling()">Kiểm Tra Lỗi</button>
+      <button class="action-btn btn-answer" onclick="showAnswer()">Xem Đáp Án</button>
+    </div>
+  </div>
+
+  <script>
+    const vocab = [
+      // UNIT 1 - PHẦN 1 (1 - 15)
+      { part: "u1p1", word: "breadwinner", type: "n", phonetic: "/ˈbredwɪnər/", meaning: "người trụ cột gia đình", grammar: "become the family's breadwinner: trở thành trụ cột gia đình" },
+      { part: "u1p1", word: "clean the house", type: "vp", phonetic: "/kliːn ðə haʊs/", meaning: "dọn dẹp nhà cửa", grammar: "clean the kitchen: dọn dẹp nhà bếp" },
+      { part: "u1p1", word: "divide sth into", type: "vp", phonetic: "/dɪˈvaɪd/", meaning: "chia cái gì thành...", grammar: "separate into parts or group: tách ra thành các phần hoặc nhóm" },
+      { part: "u1p1", word: "do the cooking", type: "vp", phonetic: "/duː ðə ˈkʊkɪŋ/", meaning: "nấu ăn", grammar: "• do the chores = do housework: làm việc nhà\n• do the heavy lifting: làm việc nặng\n• do the laundry: giặt giũ\n• do the shopping = go grocery shopping: đi chợ\n• do the washing-up = wash/do the dishes: rửa bát" },
+      { part: "u1p1", word: "equal to", type: "a", phonetic: "/ˈiːkwəl tuː/", meaning: "bình đẳng, ngang bằng với", grammar: "• equality (n): sự bình đẳng (equalize (v))\n• equally (adv): một cách bình đẳng" },
+      { part: "u1p1", word: "earn money", type: "vp", phonetic: "/ɜːn ˈmʌni/", meaning: "kiếm tiền", grammar: "earn a living / a salary: kiếm sống / nhận lương" },
+      { part: "u1p1", word: "help sb with sth", type: "v", phonetic: "/help/", meaning: "giúp ai việc gì", grammar: "give / lend sb a helping hand: ra tay giúp đỡ ai" },
+      { part: "u1p1", word: "homemaker", type: "n", phonetic: "/ˈhəʊmmeɪkər/", meaning: "người nội trợ", grammar: "Danh từ chỉ người làm nội trợ" },
+      { part: "u1p1", word: "household chores", type: "n", phonetic: "/ˈhaʊshəʊld tʃɔːz/", meaning: "việc nhà", grammar: "• do household chores: làm việc nhà\n• split / share household chores: phân chia việc nhà" },
+      { part: "u1p1", word: "make the bed", type: "v", phonetic: "/meɪk ðə bed/", meaning: "dọn dẹp / gấp chăn gối giường", grammar: "Cụm động từ cố định" },
+      { part: "u1p1", word: "sports field", type: "n", phonetic: "/spɔːts fiːld/", meaning: "sân thể thao", grammar: "= stadium (n): sân vận động" },
+      { part: "u1p1", word: "prepare for sth", type: "v", phonetic: "/prɪˈpeər/", meaning: "chuẩn bị cho cái gì", grammar: "• prepare dinner: chuẩn bị bữa tối\n• prepare the meals: chuẩn bị các bữa ăn" },
+      { part: "u1p1", word: "put out the rubbish", type: "v", phonetic: "/pʊt aʊt ðə ˈrʌbɪʃ/", meaning: "đi đổ rác", grammar: "• garbage = trash (n): rác thải\n• take out the garbage: mang rác đi đổ\n• dispose of garbage/waste: xử lý rác" },
+      { part: "u1p1", word: "shop for grocery", type: "v", phonetic: "/ʃɒp fɔː ˈɡrəʊsəri/", meaning: "đi mua hàng tạp hóa", grammar: "Cụm động từ" },
+      { part: "u1p1", word: "study for exams", type: "v", phonetic: "/ˈstʌdi fɔː ɪɡˈzæmz/", meaning: "học ôn thi", grammar: "sit for / take an exam: tham gia dự kỳ thi" },
+
+      // UNIT 1 - PHẦN 2 (16 - 29)
+      { part: "u1p2", word: "crane", type: "n", phonetic: "/kreɪn/", meaning: "cần cẩu; con sếu", grammar: "construction crane: cần cẩu xây dựng" },
+      { part: "u1p2", word: "crash", type: "v/n", phonetic: "/kræʃ/", meaning: "va chạm (v); sự va chạm (n)", grammar: "• crash into sth: đâm sầm vào cái gì\n• car / plane crash: vụ tai nạn xe/máy bay" },
+      { part: "u1p2", word: "create", type: "v", phonetic: "/kriˈeɪt/", meaning: "tạo ra, sáng tạo", grammar: "• creative (a) | creatively (adv) | creativity (n)\n• create opportunities/jobs: tạo ra cơ hội/việc làm" },
+      { part: "u1p2", word: "except (for)", type: "prep", phonetic: "/ɪkˈsept fɔːr/", meaning: "ngoại trừ, trừ ra", grammar: "Giới từ" },
+      { part: "u1p2", word: "goods", type: "n", phonetic: "/ɡʊdz/", meaning: "hàng hóa, sản phẩm", grammar: "transport / deliver goods: vận chuyển / giao hàng hóa" },
+      { part: "u1p2", word: "instead of", type: "prep", phonetic: "/ɪnˈsted əv/", meaning: "thay vì, thay cho", grammar: "= rather than = in place of" },
+      { part: "u1p2", word: "look after", type: "v", phonetic: "/lʊk ˈɑːftər/", meaning: "chăm sóc, trông nom", grammar: "= take care of (v)" },
+      { part: "u1p2", word: "raise children", type: "v", phonetic: "/reɪz ˈtʃɪldrən/", meaning: "nuôi dạy con cái", grammar: "= bring up children" },
+      { part: "u1p2", word: "stative", type: "a/n", phonetic: "/ˈsteɪtɪv/", meaning: "chỉ trạng thái (ngữ pháp)", grammar: "stative verbs: các động từ chỉ trạng thái" },
+      { part: "u1p2", word: "support", type: "v/n", phonetic: "/səˈpɔːt/", meaning: "ủng hộ, hỗ trợ (v); sự hỗ trợ (n)", grammar: "• supportive of (a): đem lại sự hỗ trợ\n• supportively (adv): một cách ủng hộ" },
+      { part: "u1p2", word: "tidy up", type: "v", phonetic: "/ˈtaɪdi ʌp/", meaning: "dọn dẹp ngăn nắp", grammar: "Cụm động từ" },
+      { part: "u1p2", word: "track", type: "n", phonetic: "/træk/", meaning: "đường đua, đường chạy", grammar: "• keep track of: theo dõi, nắm bắt thông tin\n• lose track of: mất dấu, không theo dõi được" },
+      { part: "u1p2", word: "tread", type: "n", phonetic: "/tred/", meaning: "bước đi; gai lốp xe", grammar: "Danh từ" },
+      { part: "u1p2", word: "wash the dishes / clothes", type: "vp", phonetic: "/wɒʃ ðə dɪʃɪz/", meaning: "rửa bát / giặt quần áo", grammar: "Cụm động từ" },
+
+      // UNIT 1 - PHẦN 3 (30 - 47)
+      { part: "u1p3", word: "all in all", type: "phr", phonetic: "/ɔːl ɪn ɔːl/", meaning: "tóm lại, nhìn chung", grammar: "= in conclusion = on the whole = to sum up" },
+      { part: "u1p3", word: "appropriate for", type: "a", phonetic: "/əˈprəʊpriət fɔːr/", meaning: "phù hợp với", grammar: "• suitable for (a)\n• appropriately (adv): một cách phù hợp" },
+      { part: "u1p3", word: "benefit from", type: "v", phonetic: "/ˈbenɪfɪt frəm/", meaning: "hưởng lợi từ...", grammar: "benefit of (n): lợi ích của..." },
+      { part: "u1p3", word: "bond", type: "n", phonetic: "/bɒnd/", meaning: "mối quan hệ, tình cảm", grammar: "strengthen / build / form / foster a bond: củng cố/hình thành mối quan hệ" },
+      { part: "u1p3", word: "character", type: "n", phonetic: "/ˈkærəktər/", meaning: "tính cách, nhân vật", grammar: "build / develop character: phát triển tính cách" },
+      { part: "u1p3", word: "develop", type: "v", phonetic: "/dɪˈveləp/", meaning: "phát triển, mở rộng", grammar: "development (n): sự phát triển" },
+      { part: "u1p3", word: "good for", type: "a", phonetic: "/ɡʊd fɔːr/", meaning: "tốt cho", grammar: "Tính từ đi với giới từ for" },
+      { part: "u1p3", word: "grateful", type: "a", phonetic: "/ˈɡreɪtfʊl/", meaning: "biết ơn", grammar: "• gratitude (n): lòng biết ơn\n• be grateful to sb for sth: biết ơn ai về việc gì\n• express / show gratitude to sb: thể hiện lòng biết ơn" },
+      { part: "u1p3", word: "quality", type: "n", phonetic: "/ˈkwɒləti/", meaning: "chất lượng, phẩm chất", grammar: "Danh từ" },
+      { part: "u1p3", word: "responsible for", type: "a", phonetic: "/rɪˈspɒnsəbl fɔːr/", meaning: "chịu trách nhiệm về", grammar: "responsibility (n): trách nhiệm" },
+      { part: "u1p3", word: "responsibility", type: "n", phonetic: "/rɪˌspɒnsəˈbɪləti/", meaning: "trách nhiệm", grammar: "take / assume responsibility for (vp): nhận trách nhiệm về..." },
+      { part: "u1p3", word: "life skill", type: "n", phonetic: "/laɪf skɪl/", meaning: "kỹ năng sống", grammar: "Cụm danh từ" },
+      { part: "u1p3", word: "share sth with sb", type: "v", phonetic: "/ʃeər/", meaning: "chia sẻ cái gì với ai", grammar: "Cấu trúc động từ" },
+      { part: "u1p3", word: "strong", type: "a", phonetic: "/strɒŋ/", meaning: "mạnh mẽ", grammar: "• strongly (adv)\n• strength (n): sức mạnh\n• strengthen (v): củng cố" },
+
+      // UNIT 1 - PHẦN 4 (48 - 55)
+      { part: "u1p4", word: "adult", type: "a/n", phonetic: "/ædʌlt, əˈdʌlt/", meaning: "người trưởng thành; thuộc về người lớn", grammar: "Danh từ / Tính từ chỉ người lớn" },
+      { part: "u1p4", word: "agree with sb on/about sth", type: "v", phonetic: "/əˈɡriː/", meaning: "đồng ý với ai về việc gì", grammar: "• agreeable (a): dễ chịu, tán thành\n• agreement (n): sự đồng ý\n• reach/come to an agreement: đạt được thỏa thuận" },
+      { part: "u1p4", word: "damage", type: "v/n", phonetic: "/ˈdæmɪdʒ/", meaning: "gây hại (v); sự thiệt hại (n)", grammar: "cause / do damage (to): gây ra thiệt hại" },
+      { part: "u1p4", word: "grow up", type: "vp", phonetic: "/ɡrəʊ ʌp/", meaning: "lớn lên, trưởng thành", grammar: "Phrasal Verb" },
+      { part: "u1p4", word: "need", type: "v/n", phonetic: "/niːd/", meaning: "cần thiết (v); nhu cầu (n)", grammar: "• necessary (a): cần thiết\n• meet / satisfy / fulfill a need: đáp ứng nhu cầu" },
+      { part: "u1p4", word: "playtime", type: "n", phonetic: "/ˈpleɪtaɪm/", meaning: "giờ chơi", grammar: "Danh từ" },
+      { part: "u1p4", word: "plenty of", type: "n", phonetic: "/ˈplenti əv/", meaning: "nhiều, dồi dào", grammar: "plenty of time / money / resources" },
+      { part: "u1p4", word: "use", type: "v", phonetic: "/juːz/", meaning: "sử dụng", grammar: "• useful (a) | usefully (adv)\n• useless (a) | uselessly (adv)" },
+
+      // UNIT 1 - PHẦN 5 (56 - 68)
+      { part: "u1p5", word: "achieve", type: "v", phonetic: "/əˈtʃiːv/", meaning: "đạt được, giành được", grammar: "• achievement (n): thành tựu\n• achieve a goal / success / result / dream" },
+      { part: "u1p5", word: "believe in", type: "v", phonetic: "/bɪˈliːv ɪn/", meaning: "tin tưởng vào", grammar: "belief in (n): niềm tin vào..." },
+      { part: "u1p5", word: "carry on", type: "v", phonetic: "/ˈkæri ɒn/", meaning: "tiếp tục (= continue)", grammar: "carry on + V-ing" },
+      { part: "u1p5", word: "cheer sb up", type: "v", phonetic: "/tʃɪə/", meaning: "làm ai đó vui lên, cổ vũ ai", grammar: "Cụm động từ" },
+      { part: "u1p5", word: "encourage sb to V", type: "v", phonetic: "/ɪnˈkʌrɪdʒ/", meaning: "khuyến khích ai làm gì", grammar: "discourage sb from V-ing: làm ai nản lòng" },
+      { part: "u1p5", word: "win gold medal", type: "vp", phonetic: "/wɪn ɡəʊld ˈmedl/", meaning: "giành huy chương vàng", grammar: "Cụm động từ" },
+      { part: "u1p5", word: "guest speaker", type: "np", phonetic: "/ɡest ˈspiːkə/", meaning: "diễn giả khách mời", grammar: "Cụm danh từ" },
+      { part: "u1p5", word: "physics", type: "n", phonetic: "/ˈfɪzɪks/", meaning: "môn Vật lý", grammar: "Luôn có 's' ở cuối" },
+      { part: "u1p5", word: "routine", type: "n", phonetic: "/ruːˈtiːn/", meaning: "thói quen", grammar: "daily routine: thói quen hàng ngày" },
+      { part: "u1p5", word: "succeed in", type: "v", phonetic: "/səkˈsiːd ɪn/", meaning: "thành công trong việc gì", grammar: "• success (n) # failure (n)\n• successful (a) | successfully (adv)" },
+      { part: "u1p5", word: "take part in", type: "v", phonetic: "/teɪk pɑːt ɪn/", meaning: "tham gia vào", grammar: "= participate in = join in = engage in" },
+      { part: "u1p5", word: "talk about", type: "v", phonetic: "/tɔːk əˈbaʊt/", meaning: "nói về", grammar: "talk about + sth/sb" },
+      { part: "u1p5", word: "talk show", type: "n", phonetic: "/ˈtɔːk ʃəʊ/", meaning: "chương trình tọa đàm", grammar: "Danh từ" },
+
+      // UNIT 1 - PHẦN 6 (69 - 78)
+      { part: "u1p6", word: "build / strengthen family bonds", type: "vp", phonetic: "/bɪld / ˈstreŋθn/", meaning: "củng cố mối gắn kết gia đình", grammar: "Cụm động từ" },
+      { part: "u1p6", word: "celebrate birthdays", type: "vp", phonetic: "/ˈselɪbreɪt/", meaning: "tổ chức sinh nhật", grammar: "Cụm động từ" },
+      { part: "u1p6", word: "exchange", type: "v", phonetic: "/ɪksˈtʃeɪndʒ/", meaning: "trao đổi", grammar: "exchange gifts / ideas / culture on sth" },
+      { part: "u1p6", word: "get on # get off", type: "v", phonetic: "/ɡet ɒn / ɡet ɒf/", meaning: "lên xe # xuống xe", grammar: "Dùng cho phương tiện công cộng" },
+      { part: "u1p6", word: "have a picnic = go on a picnic", type: "vp", phonetic: "/hæv ə ˈpɪknɪk/", meaning: "đi dã ngoại, đi picnic", grammar: "Cụm động từ" },
+      { part: "u1p6", word: "make a list", type: "vp", phonetic: "/meɪk ə lɪst/", meaning: "lập danh sách", grammar: "Cụm động từ" },
+      { part: "u1p6", word: "proud of", type: "a", phonetic: "/praʊd əv/", meaning: "tự hào về...", grammar: "• pride in (n): niềm tự hào\n• take pride in (vp): lấy làm tự hào" },
+      { part: "u1p6", word: "similar to", type: "a", phonetic: "/ˈsɪmələ tuː/", meaning: "tương tự, giống với", grammar: "• similarly (adv)\n• similarity (n): sự tương đồng" },
+      { part: "u1p6", word: "spotlessly", type: "adv", phonetic: "/ˈspɒtləsli/", meaning: "không vết bẩn, tinh tươm", grammar: "spotlessly clean" },
+      { part: "u1p6", word: "tell sb about sth", type: "v", phonetic: "/tel/", meaning: "kể cho ai nghe về việc gì", grammar: "tell the truth / lie / story / secret" },
+
+      // UNIT 1 - PHẦN 7 (79 - 87)
+      { part: "u1p7", word: "family value", type: "np", phonetic: "/ˈfæməli ˈvæljuː/", meaning: "giá trị gia đình", grammar: "pass on family values: truyền lại các giá trị gia đình" },
+      { part: "u1p7", word: "manner", type: "n", phonetic: "/ˈmænə/", meaning: "cách thức; phép lịch sự", grammar: "table manners / polite manners" },
+      { part: "u1p7", word: "on top of", type: "prep", phonetic: "/ɒn tɒp əv/", meaning: "trên đỉnh của", grammar: "Giới từ" },
+      { part: "u1p7", word: "pass on sth from ... to ...", type: "v", phonetic: "/pɑːs ɒn/", meaning: "truyền lại cái gì từ... sang...", grammar: "Cụm động từ" },
+
+      // UNIT 2 - PHẦN 1 (1 - 14)
+      { part: "u2p1", word: "set up", type: "v", phonetic: "/set ʌp/", meaning: "thành lập, thiết lập, dựng lên", grammar: "= establish (v) = found (v)\n• establishment (n): sự thành lập; cơ sở" },
+      { part: "u2p1", word: "The youth union", type: "n.phr", phonetic: "/ðə juːθ ˈjuːniən/", meaning: "Đoàn Thanh niên", grammar: "Cụm danh từ" },
+      { part: "u2p1", word: "aim", type: "n/v", phonetic: "/eɪm/", meaning: "mục tiêu, mục đích (n); nhắm đến (v)", grammar: "• aim at doing sth = aim to do sth: nhắm đến làm gì\n• aim for sth: nhắm vào cái gì, cố đạt được" },
+      { part: "u2p1", word: "improve", type: "v", phonetic: "/ɪmˈpruːv/", meaning: "cải thiện, nâng cao", grammar: "improvement (n): sự cải thiện" },
+      { part: "u2p1", word: "environment", type: "n", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "môi trường", grammar: "• environmental (a): thuộc về môi trường\n• environmental issue (n.phr): vấn đề môi trường\n• environmentally friendly (a): thân thiện môi trường\n• environmentalist (n): nhà môi trường học" },
+      { part: "u2p1", word: "adopt", type: "v", phonetic: "/əˈdɒpt/", meaning: "nhận làm con nuôi; chấp nhận, áp dụng", grammar: "adoption (n): sự nhận nuôi; sự chấp nhận, áp dụng" },
+      { part: "u2p1", word: "be aware of", type: "a", phonetic: "/biː əˈweər əv/", meaning: "nhận thức được, ý thức được", grammar: "• awareness (n): sự nhận thức\n• raise sb's awareness about/of sth: nâng cao nhận thức của ai về cái gì" },
+      { part: "u2p1", word: "go green", type: "vp", phonetic: "/ɡəʊ ɡriːn/", meaning: "sống xanh, thực hành lối sống thân thiện với môi trường", grammar: "Cụm động từ" },
+      { part: "u2p1", word: "reduce", type: "v", phonetic: "/rɪˈdjuːs/", meaning: "giảm bớt", grammar: "= go down = decrease = decline = fall = drop (# go up = increase)\n• reduction (n): sự giảm bớt" },
+      { part: "u2p1", word: "carbon footprint", type: "n", phonetic: "/ˈkɑːbən ˈfʊtprɪnt/", meaning: "lượng khí thải carbon", grammar: "Cụm danh từ" },
+      { part: "u2p1", word: "be keen on doing sth", type: "a", phonetic: "/biː kiːn ɒn/", meaning: "ham thích, say mê làm gì", grammar: "= keen to do sth" },
+      { part: "u2p1", word: "protect / save ... from", type: "v", phonetic: "/prəˈtekt/", meaning: "bảo vệ, cứu ai/cái gì khỏi", grammar: "• protection (n): sự bảo vệ\n• protective (a): mang tính bảo vệ, che chở" },
+      { part: "u2p1", word: "achieve = gain", type: "v", phonetic: "/əˈtʃiːv / ɡeɪn/", meaning: "đạt được", grammar: "• achievable (a): có thể đạt được\n• achiever (n): người thành đạt\n• achievement (n): thành tựu" }
+    ];
+
+    let filteredVocab = [...vocab];
+    let current = null;
+
+    function filterSection() {
+      const selectedPart = document.getElementById("sectionSelect").value;
+      if (selectedPart === "all") {
+        filteredVocab = [...vocab];
+      } else {
+        filteredVocab = vocab.filter(item => item.part === selectedPart);
+      }
+      document.getElementById("counter").innerText = `Số từ trong phần này: ${filteredVocab.length}`;
+      randomWord();
+    }
+
+    function randomWord() {
+      if (filteredVocab.length === 0) return;
+      current = filteredVocab[Math.floor(Math.random() * filteredVocab.length)];
+      
+      document.getElementById("prompt").style.display = "none";
+      document.getElementById("word-detail").style.display = "block";
+      document.getElementById("answer-box").style.display = "none";
+
+      document.getElementById("type").innerText = current.type;
+      document.getElementById("word").innerText = current.word;
+      document.getElementById("phonetic").innerText = current.phonetic || "";
+
+      // Reset các ô gõ và feedback
+      document.getElementById("userWord").value = "";
+      document.getElementById("userType").value = "";
+      document.getElementById("userGrammar").value = "";
+      const fb = document.getElementById("feedback");
+      fb.style.display = "none";
+      fb.className = "feedback";
+    }
+
+    function showAnswer() {
+      if (current) {
+        document.getElementById("meaning").innerText = `Nghĩa: ${current.meaning}`;
+        document.getElementById("grammar").innerText = `Ghi chú / Cấu trúc:\n${current.grammar}`;
+        document.getElementById("answer-box").style.display = "block";
+      }
+    }
+
+    function checkSpelling() {
+      if (!current) return;
+
+      const userWord = document.getElementById("userWord").value.trim().toLowerCase();
+      const userType = document.getElementById("userType").value.trim().toLowerCase();
+      const userGrammar = document.getElementById("userGrammar").value.trim().toLowerCase();
+
+      const correctWord = current.word.trim().toLowerCase();
+      const correctType = current.type.trim().toLowerCase();
+      const correctGrammar = current.grammar.trim().toLowerCase();
+
+      let messages = [];
+      let isWordCorrect = false;
+
+      // Kiểm tra chính tả từ
+      if (userWord === "") {
+        messages.push("⚠️ Bạn chưa nhập từ Tiếng Anh!");
+      } else if (userWord === correctWord) {
+        messages.push("✅ Chính tả Từ Tiếng Anh: CHÍNH XÁC!");
+        isWordCorrect = true;
+      } else {
+        messages.push(`❌ Lỗi chính tả từ: Bạn nhập '${userWord}' | Đáp án đúng: '${current.word}'`);
+      }
+
+      // Kiểm tra loại từ (nếu có nhập)
+      if (userType !== "") {
+        if (userType === correctType) {
+          messages.push("✅ Loại từ: CHÍNH XÁC!");
+        } else {
+          messages.push(`❌ Loại từ sai: Bạn nhập '${userType}' | Đáp án đúng: '${current.type}'`);
+        }
+      }
+
+      // Kiểm tra cụm / ngữ pháp (nếu có nhập)
+      if (userGrammar !== "") {
+        if (correctGrammar.includes(userGrammar)) {
+          messages.push("✅ Cụm từ/Ngữ pháp: CHÍNH XÁC (Trùng khớp một phần hoặc hoàn toàn)!");
+        } else {
+          messages.push(`❌ Ngữ pháp/Cụm từ chưa chính xác với gợi ý trong đề cương.`);
+        }
+      }
+
+      const fb = document.getElementById("feedback");
+      fb.style.display = "block";
+      fb.innerText = messages.join("\n");
+      
+      if (isWordCorrect && (userType === "" || userType === correctType)) {
+        fb.className = "feedback correct";
+      } else {
+        fb.className = "feedback incorrect";
+      }
+
+      // Tự động mở đáp án chi tiết khi kiểm tra
+      showAnswer();
+    }
+
+    function speakWord() {
+      if (current && 'speechSynthesis' in window) {
+        const cleanWord = current.word.split('/')[0].split('#')[0].replace(/sb|sth|V|to/g, '').trim();
+        const utterance = new SpeechSynthesisUtterance(cleanWord);
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Khởi tạo ban đầu
+    filterSection();
+  </script>
 </body>
 </html>
