@@ -1,247 +1,31 @@
 <!doctype html>
-<html lang="vi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Luyện từ vựng – tự điền & kiểm tra chính tả</title>
-<meta name="description" content="Ôn từ vựng Unit 1–5 bằng cách tự điền và kiểm tra chính tả. Dữ liệu được đọc từ file JSON.">
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ôn từ vựng Unit 1–5</title>
 <style>
-:root {
-  --bg:#f5f6fa; --card:#fff; --line:#d8dce5; --text:#172033;
-  --muted:#687386; --accent:#4f46e5; --accent-soft:#eef0ff;
-  --good:#15803d; --bad:#b91c1c; --warn:#b45309;
-}
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--text); font-family:Arial,Helvetica,sans-serif; }
-.wrap { max-width:1150px; margin:0 auto; padding:22px; }
-h1 { margin:0 0 6px; font-size:28px; }
-.sub { margin:0 0 18px; color:var(--muted); }
-.toolbar { display:grid; grid-template-columns:1fr 1fr 1.8fr; gap:10px; margin-bottom:16px; }
-select,input,button { font:inherit; }
-select,input[type="text"],input[type="number"] {
-  width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px;
-  background:#fff; outline:none;
-}
-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,70,229,.1); }
-.card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:0 7px 24px rgba(0,0,0,.04); }
-.meta { color:var(--muted); font-size:14px; margin-bottom:8px; }
-.meaning { text-align:center; font-size:27px; font-weight:800; margin:4px 0 5px; }
-.main-type { text-align:center; font-size:18px; margin-bottom:20px; }
-.main-type strong { color:var(--accent); }
-.instruction { margin:0 0 14px; color:var(--muted); line-height:1.5; }
-table { width:100%; border-collapse:collapse; table-layout:fixed; }
-th,td { border:1px solid var(--line); padding:8px; vertical-align:middle; }
-th { background:#f0f2f7; text-align:left; font-weight:800; }
-th:nth-child(1) { width:14%; }
-th:nth-child(2) { width:15%; }
-th:nth-child(3) { width:36%; }
-th:nth-child(4) { width:35%; }
-td input { padding:9px 10px; }
-.actions { display:flex; gap:9px; flex-wrap:wrap; margin-top:16px; }
-button { border:0; border-radius:10px; padding:10px 14px; cursor:pointer; font-weight:700; }
-.primary { background:var(--accent); color:#fff; }
-.secondary { background:#e9ebf2; color:#283247; }
-.score { margin-top:14px; padding:10px 12px; background:var(--accent-soft); border-radius:10px; display:none; }
-.score.show { display:block; }
-.ok { border:2px solid var(--good) !important; background:#f0fdf4 !important; }
-.no { border:2px solid var(--bad) !important; background:#fff5f5 !important; }
-.feedback { margin-top:12px; font-size:14px; }
-.feedback .good { color:var(--good); }
-.feedback .bad { color:var(--bad); }
-.progress { color:var(--muted); font-size:14px; margin-top:12px; }
-.legend { font-size:13px; color:var(--muted); margin-top:8px; }
-@media(max-width:760px) {
-  .toolbar { grid-template-columns:1fr; }
-  .meaning { font-size:23px; }
-  table { font-size:13px; }
-  th,td { padding:6px; }
-  th:nth-child(1) { width:15%; } th:nth-child(2) { width:16%; }
-  th:nth-child(3) { width:34%; } th:nth-child(4) { width:35%; }
-}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>Ôn từ vựng – tự điền để kiểm tra chính tả</h1>
-  <p class="sub">Chỉ cho sẵn nghĩa của nhóm từ và loại từ của <b>từ chính</b>. Bạn tự điền bảng bên dưới rồi bấm <b>Chấm bài</b>.</p>
-
-  <div class="toolbar">
-    <select id="unit"><option value="ALL">Tất cả Unit</option></select>
-    <select id="part"><option value="ALL">Tất cả phần</option></select>
-    <input id="search" type="text" placeholder="Tìm theo nghĩa hoặc số từ...">
-  </div>
-
-  <div class="card" id="card"></div>
-</div>
-
+:root{--bg:#f5f7fb;--card:#fff;--line:#d7dce6;--text:#172033;--muted:#687386;--accent:#4f46e5;--good:#15803d;--bad:#b91c1c;--goodbg:#f0fdf4;--badbg:#fff1f2;--soft:#eef0ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1200px;margin:0 auto;padding:22px}h1{margin:0 0 5px;font-size:28px}.sub{margin:0 0 16px;color:var(--muted)}.toolbar{display:grid;grid-template-columns:1fr 1.4fr 2fr;gap:10px;margin-bottom:16px}select,input,button{font:inherit}select,input[type=text]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:0}select:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,.1)}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 8px 25px rgba(0,0,0,.05);margin-bottom:16px}.parthead{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:10px}.partname{font-size:18px;font-weight:800}.partinfo{color:var(--muted);font-size:14px}.summary{display:none;padding:13px 14px;border-radius:12px;background:var(--soft);margin-bottom:14px}.summary.show{display:block}.summary .scorebig{font-size:22px;font-weight:800}.group{border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden}.grouphead{padding:14px;background:#fafbfe;border-bottom:1px solid var(--line)}.groupno{color:var(--muted);font-size:13px;margin-bottom:4px}.meaning{font-size:22px;font-weight:800}.maininfo{color:var(--muted);margin-top:4px}.hint{font-size:13px;color:var(--muted);margin:10px 0 0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:760px}th,td{border:1px solid var(--line);padding:8px;vertical-align:top}th{background:#eef1f6;text-align:left}th:nth-child(1){width:14%}th:nth-child(2){width:15%}th:nth-child(3){width:34%}th:nth-child(4){width:37%}td input{padding:8px 9px}.correct{border:2px solid var(--good)!important;background:var(--goodbg)!important}.wrong{border:2px solid var(--bad)!important;background:var(--badbg)!important}.cellfeedback{font-size:12px;margin-top:5px;line-height:1.35}.cellfeedback.good{color:var(--good)}.cellfeedback.bad{color:var(--bad)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:800}.primary{background:var(--accent);color:white}.secondary{background:#e9edf4;color:#263044}.danger{background:#fee2e2;color:#991b1b}.empty{text-align:center;color:var(--muted);padding:35px}.legend{margin-top:8px;color:var(--muted);font-size:13px}.topnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.mode.active{background:var(--accent);color:#fff}.mode{background:#e9edf4;color:#263044}.sectiontitle{font-size:16px;font-weight:800;margin:3px 0 0}.noresult{padding:30px;text-align:center;color:var(--muted)}
+@media(max-width:760px){.toolbar{grid-template-columns:1fr}.wrap{padding:14px}h1{font-size:23px}.meaning{font-size:19px}}
+</style></head>
+<body><div class="wrap"><h1>Ôn từ vựng Unit 1–5</h1><p class="sub">Chọn đúng Unit + phần nhỏ, tự điền toàn bộ bảng rồi nộp bài. Web sẽ chỉ rõ <b>sai ở ô nào</b>, bạn điền gì và <b>đáp án đúng</b>.</p>
+<div class="topnav"><button class="btn mode active" id="partMode">Làm theo phần</button><button class="btn mode" id="groupMode">Làm từng nhóm</button></div>
+<div class="toolbar"><select id="unit"><option value="ALL">Tất cả Unit</option></select><select id="part"><option value="ALL">Tất cả phần</option></select><input id="search" type="text" placeholder="Tìm số từ, nghĩa hoặc từ khóa..."></div>
+<div id="content"></div></div>
 <script>
-let GROUPS = [];
-const state = { unit:"ALL", part:"ALL", search:"", index:0, filtered:[] };
-
-const unitEl=document.getElementById("unit");
-const partEl=document.getElementById("part");
-const searchEl=document.getElementById("search");
-const card=document.getElementById("card");
-
-function uniq(a) { return [...new Set(a.filter(Boolean))]; }
-
-function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, ch =>
-    ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch])
-  );
-}
-
-function fillUnits() {
-  for (const u of uniq(GROUPS.map(x=>x.unit))) {
-    const o=document.createElement("option"); o.value=u; o.textContent=u; unitEl.appendChild(o);
-  }
-}
-
-function fillParts() {
-  const ps=uniq(GROUPS.filter(x=>state.unit==="ALL"||x.unit===state.unit).map(x=>x.part));
-  partEl.innerHTML='<option value="ALL">Tất cả phần</option>';
-  for (const p of ps) {
-    const o=document.createElement("option"); o.value=p; o.textContent=p; partEl.appendChild(o);
-  }
-  if (!ps.includes(state.part)) { state.part="ALL"; partEl.value="ALL"; }
-}
-
-function filtered() {
-  const q=state.search.trim().toLowerCase();
-  return GROUPS.filter(x=>{
-    if(state.unit!=="ALL" && x.unit!==state.unit) return false;
-    if(state.part!=="ALL" && x.part!==state.part) return false;
-    if(!q) return true;
-    return [x.unit,x.part,String(x.so??""),x.meaning,x.main_word].join(" ").toLowerCase().includes(q);
-  });
-}
-
-function check() {
-  const x=state.filtered[state.index];
-  let correct=0, total=0;
-  x.words.forEach((ans,i)=>{
-    const row=document.querySelectorAll("#vocabBody tr")[i];
-    const inputs=row.querySelectorAll("input");
-    const vals=[...inputs].map(z=>z.value.trim());
-    const expected=[ans.nhan_am||"",ans.loai_tu||"",ans.tu||"",ans.nghia||""];
-    inputs.forEach((inp,j)=>{
-      inp.classList.remove("ok","no");
-      const typed=vals[j];
-      const exp=expected[j].trim();
-      if (typed && typed.toLowerCase()===exp.toLowerCase()) {
-        inp.classList.add("ok"); correct++;
-      } else {
-        inp.classList.add("no");
-      }
-      total++;
-    });
-  });
-  const box=document.getElementById("score");
-  box.innerHTML = `<b>Kết quả:</b> ${correct}/${total} ô đúng. 
-    <span class="legend">Ô xanh = đúng, ô đỏ = sai hoặc chưa điền.</span>`;
-  box.classList.add("show");
-}
-
-function next(delta) {
-  state.index += delta;
-  if(state.index<0) state.index=state.filtered.length-1;
-  if(state.index>=state.filtered.length) state.index=0;
-  render();
-}
-
-function randomGroup() {
-  if(state.filtered.length<=1) return;
-  let n=Math.floor(Math.random()*state.filtered.length);
-  if(n===state.index) n=(n+1)%state.filtered.length;
-  state.index=n; render();
-}
-
-function render() {
-  state.filtered=filtered();
-  if(!state.filtered.length) {
-    card.innerHTML='<div style="text-align:center;padding:30px;color:#687386">Không có nhóm từ phù hợp.</div>';
-    return;
-  }
-  if(state.index>=state.filtered.length) state.index=0;
-
-  const x=state.filtered[state.index];
-  const no=x.so!=null ? `Từ số ${x.so}` : "Nhóm từ";
-  const rows=x.words.map((ans,i)=>`
-    <tr>
-      <td><input type="text" data-col="stress" placeholder="Điền nhấn âm"></td>
-      <td><input type="text" data-col="pos" placeholder="Loại từ"></td>
-      <td><input type="text" data-col="word" placeholder="Tự điền từ"></td>
-      <td><input type="text" data-col="meaning" placeholder="Nghĩa tiếng Việt"></td>
-    </tr>`).join("");
-
-  card.innerHTML=`
-    <div class="meta">${esc(x.unit)} • ${esc(x.part)} • ${no}</div>
-    <div class="meaning">${esc(x.meaning)}</div>
-    <div class="main-type">Loại từ của từ chính: <strong>${esc(x.main_pos)}</strong></div>
-    <p class="instruction">Hãy tự nhớ và điền tất cả các từ liên quan vào bảng. Không hiện sẵn đáp án để bạn có thể luyện chính tả.</p>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Nhấn âm</th>
-          <th>Loại từ</th>
-          <th>Từ</th>
-          <th>Nghĩa tiếng Việt của từ liên quan</th>
-        </tr>
-      </thead>
-      <tbody id="vocabBody">${rows}</tbody>
-    </table>
-
-    <div id="score" class="score"></div>
-
-    <div class="actions">
-      <button class="primary" onclick="check()">Chấm bài</button>
-      <button class="secondary" onclick="next(-1)">← Từ trước</button>
-      <button class="secondary" onclick="next(1)">Từ tiếp →</button>
-      <button class="secondary" onclick="randomGroup()">Ngẫu nhiên</button>
-    </div>
-    <div class="progress">Nhóm ${state.index+1} / ${state.filtered.length}</div>
-  `;
-}
-
-unitEl.onchange=()=>{ state.unit=unitEl.value; state.index=0; fillParts(); render(); };
-partEl.onchange=()=>{ state.part=partEl.value; state.index=0; render(); };
-searchEl.oninput=()=>{ state.search=searchEl.value; state.index=0; render(); };
-
-async function loadVocabulary() {
-  try {
-    const response = await fetch("./tu_vung_unit_1_5_word.json");
-    if (!response.ok) throw new Error("HTTP " + response.status);
-    const data = await response.json();
-    GROUPS = [];
-    for (const unit of (data.units || [])) {
-      for (const part of (unit.parts || [])) {
-        for (const group of (part.groups || [])) {
-          const main = group.tu_chinh;
-          const related = group.tu_lien_quan || [];
-          if (!main) continue;
-          GROUPS.push({
-            unit: unit.unit || "",
-            part: part.part || "",
-            so: group.so ?? null,
-            meaning: main.nghia || "",
-            main_pos: main.loai_tu || "",
-            main_word: main.tu || "",
-            words: [main, ...related]
-          });
-        }
-      }
-    }
-    fillUnits();
-    fillParts();
-    render();
-  } catch (err) {
-    card.innerHTML = '<div style="text-align:center;padding:30px;color:#b91c1c">Không tải được dữ liệu từ vựng. Hãy kiểm tra file <b>tu_vung_unit_1_5_word.json</b> có nằm cùng thư mục với index.html không.</div>';
-    console.error(err);
-  }
-}
-
-loadVocabulary();
-</script>
-</body>
-</html>
+let DATA=[];let mode='part';let currentUnit='ALL',currentPart='ALL',search='';
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function load(){try{const r=await fetch('./tu_vung_unit_1_5_word.json');if(!r.ok)throw Error('HTTP '+r.status);DATA=await r.json();buildUnits();buildParts();render();}catch(e){$('#content').innerHTML='<div class="card empty">Không tải được file JSON. Hãy đặt <b>tu_vung_unit_1_5_word.json</b> cùng thư mục với <b>index.html</b> khi đăng GitHub Pages.</div>';console.error(e)}}
+function buildUnits(){for(const u of DATA.units||[]){let o=document.createElement('option');o.value=u.unit;o.textContent=u.unit;$('#unit').appendChild(o)}}
+function buildParts(){let set=[];for(const u of DATA.units||[]){if(currentUnit!=='ALL'&&u.unit!==currentUnit)continue;for(const p of u.parts||[])set.push(p.part)}set=[...new Set(set)];$('#part').innerHTML='<option value="ALL">Tất cả phần</option>'+set.map(p=>`<option>${esc(p)}</option>`).join('');if(!set.includes(currentPart))currentPart='ALL';$('#part').value=currentPart}
+function allGroups(){let arr=[];for(const u of DATA.units||[]){for(const p of u.parts||[]){for(const g of p.groups||[]){if(!g.tu_chinh)continue;arr.push({unit:u.unit,part:p.part,...g})}}}return arr}
+function filteredGroups(){let q=search.trim().toLowerCase();return allGroups().filter(g=>{if(currentUnit!=='ALL'&&g.unit!==currentUnit)return false;if(currentPart!=='ALL'&&g.part!==currentPart)return false;if(!q)return true;return [g.unit,g.part,g.so,g.tu_chinh.tu,g.tu_chinh.nghia].join(' ').toLowerCase().includes(q)})}
+function row(g,word,i){return `<tr><td><input data-i="${i}" data-k="nhan_am" placeholder="Nhấn âm"></td><td><input data-i="${i}" data-k="loai_tu" placeholder="Loại từ"></td><td><input data-i="${i}" data-k="tu" placeholder="Tự điền từ"></td><td><input data-i="${i}" data-k="nghia" placeholder="Nghĩa tiếng Việt"><div class="cellfeedback"></div></td></tr>`}
+function groupCard(g,gi,formId){let words=[g.tu_chinh,...(g.tu_lien_quan||[])];return `<section class="group" data-group-index="${gi}" data-form="${formId}"><div class="grouphead"><div class="groupno">${g.so!=null?'Từ số '+esc(g.so):'Nhóm từ'} · ${esc(g.unit)} · ${esc(g.part)}</div><div class="meaning">${esc(g.tu_chinh.nghia)}</div><div class="maininfo">Loại từ của từ chính: <b>${esc(g.tu_chinh.loai_tu)}</b></div><div class="hint">Bảng bên dưới để trống. Hãy tự điền để luyện nhớ từ và chính tả.</div></div><div class="tablewrap"><table><thead><tr><th>Nhấn âm</th><th>Loại từ</th><th>Từ</th><th>Nghĩa tiếng Việt của từ liên quan</th></tr></thead><tbody>${words.map((w,i)=>row(g,w,i)).join('')}</tbody></table></div></section>`}
+function getSections(groups){let map=new Map();for(const g of groups){let key=g.unit+'|||'+g.part;if(!map.has(key))map.set(key,{unit:g.unit,part:g.part,groups:[]});map.get(key).groups.push(g)}return [...map.values()]}
+function render(){let gs=filteredGroups();if(mode==='group'){if(!gs.length){$('#content').innerHTML='<div class="card noresult">Không có nhóm từ phù hợp.</div>';return}renderGroupMode(gs);return}renderPartMode(gs)}
+function renderPartMode(gs){let secs=getSections(gs);if(!secs.length){$('#content').innerHTML='<div class="card noresult">Không có phần nào phù hợp.</div>';return}$('#content').innerHTML=secs.map((s,si)=>`<div class="card" data-section="${si}"><div class="parthead"><div><div class="partname">${esc(s.unit)} — ${esc(s.part)}</div><div class="partinfo">${s.groups.length} nhóm từ</div></div><button class="btn primary" onclick="gradeSection(${si})">Nộp bài phần này</button></div><div class="summary" id="summary-${si}"></div>${s.groups.map((g,gi)=>groupCard(g,gi,si)).join('')}<div class="legend">Sau khi nộp, mỗi ô sai sẽ ghi rõ: bạn điền gì → đáp án đúng.</div></div>`).join('');window.__sections=secs}
+function renderGroupMode(gs){let g=gs[0];$('#content').innerHTML=`<div class="card">${groupCard(g,0,'single')}<div class="actions"><button class="btn primary" onclick="gradeSingle()">Chấm nhóm này</button><button class="btn secondary" onclick="nextGroup()">Nhóm tiếp theo →</button></div></div>`;window.__single=gs;}
+function norm(s){return String(s??'').trim().toLowerCase().replace(/\s+/g,' ')}
+function gradeSection(si){let sec=document.querySelectorAll('[data-section]')[si], data=window.__sections[si];let total=0,correct=0,wrongList=[];data.groups.forEach((g,gi)=>{let secBox=sec.querySelectorAll('.group')[gi];let rows=[...secBox.querySelectorAll('tbody tr')];rows.forEach((tr,i)=>{let ans=[g.tu_chinh,...(g.tu_lien_quan||[])][i];let vals=[...tr.querySelectorAll('input')];let expected=[ans.nhan_am||'',ans.loai_tu||'',ans.tu||'',ans.nghia||''];let labels=['Nhấn âm','Loại từ','Từ','Nghĩa tiếng Việt'];vals.forEach((inp,j)=>{total++;let typed=inp.value.trim(),ok=norm(typed)===norm(expected[j])&&!(!typed&&!expected[j]);let fb=inp.parentElement.querySelector('.cellfeedback');inp.classList.remove('correct','wrong');fb.className='cellfeedback '+(ok?'good':'bad');if(ok){correct++;fb.textContent='✓ Đúng';inp.classList.add('correct')}else{inp.classList.add('wrong');fb.textContent=(typed?'Bạn điền: '+typed+' → ':'Chưa điền → ')+'Đúng: '+expected[j];wrongList.push({group:g.so||'',row:i+1,col:labels[j]})}})})});let pct=total?Math.round(correct/total*100):0;let sum=sec.querySelector('.summary');sum.classList.add('show');sum.innerHTML=`<div class="scorebig">Kết quả: ${correct}/${total} ô đúng (${pct}%)</div>${wrongList.length?'<div style="margin-top:6px;color:var(--bad)"><b>Có '+wrongList.length+' ô cần sửa.</b> Xem ngay chữ đỏ dưới từng ô.</div>':'<div style="margin-top:6px;color:var(--good)"><b>Hoàn thành chính xác phần này! 🎉</b></div>'}`;}
+function gradeSingle(){let g=window.__single[0];let box=document.querySelector('.group');let rows=[...box.querySelectorAll('tbody tr')];let total=0,correct=0;rows.forEach((tr,i)=>{let ans=[g.tu_chinh,...(g.tu_lien_quan||[])][i];let vals=[...tr.querySelectorAll('input')];let expected=[ans.nhan_am||'',ans.loai_tu||'',ans.tu||'',ans.nghia||''];vals.forEach((inp,j)=>{total++;let fb=inp.parentElement.querySelector('.cellfeedback');let ok=norm(inp.value)===norm(expected[j])&&!(!inp.value&&!expected[j]);inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok);fb.className='cellfeedback '+(ok?'good':'bad');fb.textContent=ok?'✓ Đúng':(inp.value.trim()?'Bạn điền: '+inp.value.trim()+' → Đúng: '+expected[j]:'Chưa điền → Đúng: '+expected[j]);if(ok)correct++})});let a=document.querySelector('.actions');let old=document.getElementById('singlescore');if(!old){old=document.createElement('div');old.id='singlescore';old.className='summary show';a.before(old)}old.innerHTML=`<div class="scorebig">Kết quả: ${correct}/${total} ô đúng (${total?Math.round(correct/total*100):0}%)</div>`}
+function nextGroup(){if(!window.__single?.length)return;window.__single.push(window.__single.shift());renderGroupMode(window.__single)}
+$('#partMode').onclick=()=>{mode='part';$('#partMode').classList.add('active');$('#groupMode').classList.remove('active');render()};$('#groupMode').onclick=()=>{mode='group';$('#groupMode').classList.add('active');$('#partMode').classList.remove('active');render()};$('#unit').onchange=e=>{currentUnit=e.target.value;buildParts();render()};$('#part').onchange=e=>{currentPart=e.target.value;render()};$('#search').oninput=e=>{search=e.target.value;render()};
+load();
+</script></body></html>
