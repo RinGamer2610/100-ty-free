@@ -1,31 +1,440 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ôn từ vựng Unit 1–5</title>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ôn từ vựng Unit 1–5: tự điền, chấm từng ô và xáo trộn nhóm từ.">
+<title>Ôn từ vựng Unit 1–5</title>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--line:#d7dce6;--text:#172033;--muted:#687386;--accent:#4f46e5;--good:#15803d;--bad:#b91c1c;--goodbg:#f0fdf4;--badbg:#fff1f2;--soft:#eef0ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1200px;margin:0 auto;padding:22px}h1{margin:0 0 5px;font-size:28px}.sub{margin:0 0 16px;color:var(--muted)}.toolbar{display:grid;grid-template-columns:1fr 1.4fr 2fr;gap:10px;margin-bottom:16px}select,input,button{font:inherit}select,input[type=text]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:0}select:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,.1)}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 8px 25px rgba(0,0,0,.05);margin-bottom:16px}.parthead{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:10px}.partname{font-size:18px;font-weight:800}.partinfo{color:var(--muted);font-size:14px}.summary{display:none;padding:13px 14px;border-radius:12px;background:var(--soft);margin-bottom:14px}.summary.show{display:block}.summary .scorebig{font-size:22px;font-weight:800}.group{border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden}.grouphead{padding:14px;background:#fafbfe;border-bottom:1px solid var(--line)}.groupno{color:var(--muted);font-size:13px;margin-bottom:4px}.meaning{font-size:22px;font-weight:800}.maininfo{color:var(--muted);margin-top:4px}.hint{font-size:13px;color:var(--muted);margin:10px 0 0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:760px}th,td{border:1px solid var(--line);padding:8px;vertical-align:top}th{background:#eef1f6;text-align:left}th:nth-child(1){width:14%}th:nth-child(2){width:15%}th:nth-child(3){width:34%}th:nth-child(4){width:37%}td input{padding:8px 9px}.correct{border:2px solid var(--good)!important;background:var(--goodbg)!important}.wrong{border:2px solid var(--bad)!important;background:var(--badbg)!important}.cellfeedback{font-size:12px;margin-top:5px;line-height:1.35}.cellfeedback.good{color:var(--good)}.cellfeedback.bad{color:var(--bad)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:800}.primary{background:var(--accent);color:white}.secondary{background:#e9edf4;color:#263044}.danger{background:#fee2e2;color:#991b1b}.empty{text-align:center;color:var(--muted);padding:35px}.legend{margin-top:8px;color:var(--muted);font-size:13px}.topnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.mode.active{background:var(--accent);color:#fff}.mode{background:#e9edf4;color:#263044}.sectiontitle{font-size:16px;font-weight:800;margin:3px 0 0}.noresult{padding:30px;text-align:center;color:var(--muted)}
-@media(max-width:760px){.toolbar{grid-template-columns:1fr}.wrap{padding:14px}h1{font-size:23px}.meaning{font-size:19px}}
-</style></head>
-<body><div class="wrap"><h1>Ôn từ vựng Unit 1–5</h1><p class="sub">Chọn đúng Unit + phần nhỏ, tự điền toàn bộ bảng rồi nộp bài. Web sẽ chỉ rõ <b>sai ở ô nào</b>, bạn điền gì và <b>đáp án đúng</b>.</p>
-<div class="topnav"><button class="btn mode active" id="partMode">Làm theo phần</button><button class="btn mode" id="groupMode">Làm từng nhóm</button></div>
-<div class="toolbar"><select id="unit"><option value="ALL">Tất cả Unit</option></select><select id="part"><option value="ALL">Tất cả phần</option></select><input id="search" type="text" placeholder="Tìm số từ, nghĩa hoặc từ khóa..."></div>
-<div id="content"></div></div>
+:root {
+  --bg:#f3f5fb; --card:#fff; --ink:#172033; --muted:#637089;
+  --line:#d9dfeb; --accent:#4f46e5; --accent-dark:#3730a3;
+  --soft:#eef0ff; --good:#15803d; --good-bg:#f0fdf4;
+  --bad:#b91c1c; --bad-bg:#fff1f2; --neutral:#8a5a00; --neutral-bg:#fff8e7;
+}
+* { box-sizing:border-box; }
+html { color-scheme:light; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; line-height:1.45; }
+.wrap { max-width:1420px; margin:0 auto; padding:24px clamp(12px,2.6vw,32px) 48px; }
+h1 { margin:0 0 6px; font-size:clamp(25px,3vw,36px); line-height:1.2; }
+.lede { margin:0 0 20px; color:var(--muted); }
+.toolbar { display:grid; grid-template-columns:minmax(170px, .85fr) minmax(200px,1.15fr) minmax(220px,1.6fr); gap:12px; margin:18px 0; }
+select, input, button { font:inherit; }
+select, input[type="text"] { min-width:0; width:100%; max-width:100%; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); padding:10px 12px; }
+select:focus, input:focus { outline:3px solid #c7d2fe; border-color:var(--accent); }
+.modebar, .actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+button { border:0; border-radius:10px; padding:10px 15px; font-weight:750; cursor:pointer; transition:transform .05s ease, background .15s ease; }
+button:active { transform:translateY(1px); }
+button:disabled { opacity:.5; cursor:not-allowed; }
+.btn-primary { color:white; background:var(--accent); }
+.btn-primary:hover { background:var(--accent-dark); }
+.btn-secondary { color:#243047; background:#e7eaf2; }
+.btn-secondary:hover { background:#dce1ed; }
+.btn-shuffle { color:#3b2f00; background:#ffedb3; }
+.btn-shuffle:hover { background:#ffe38a; }
+.status { color:var(--muted); font-size:14px; margin:12px 0; }
+.panel { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:clamp(12px,2vw,24px); box-shadow:0 8px 26px rgba(23,32,51,.055); }
+.panel-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center; margin-bottom:16px; }
+.panel-head h2 { margin:0; font-size:clamp(20px,2.2vw,26px); }
+.panel-head p { margin:3px 0 0; color:var(--muted); }
+.group { border:1px solid var(--line); border-radius:15px; overflow:hidden; margin:14px 0 18px; background:white; }
+.group:last-child { margin-bottom:0; }
+.group-top { padding:15px 16px 13px; background:#fafbff; border-bottom:1px solid var(--line); }
+.group-meta { color:var(--muted); font-size:13px; margin-bottom:4px; }
+.group-meaning { font-size:clamp(19px,2.1vw,25px); font-weight:800; overflow-wrap:anywhere; }
+.group-instruction { font-size:14px; color:var(--muted); margin-top:5px; }
+.table-scroller { width:100%; overflow-x:auto; }
+table { width:100%; border-collapse:collapse; table-layout:fixed; min-width:760px; }
+th, td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:8px; text-align:left; vertical-align:top; }
+th:last-child, td:last-child { border-right:0; }
+tr:last-child td { border-bottom:0; }
+th { background:#edf1f8; font-weight:800; }
+th:nth-child(1) { width:14%; }
+th:nth-child(2) { width:15%; }
+th:nth-child(3) { width:32%; }
+th:nth-child(4) { width:39%; }
+td input[type="text"] { display:block; width:100%; min-width:0; max-width:100%; border:1px solid #c7cedb; border-radius:7px; padding:9px 10px; background:#fff; }
+td input[type="text"].is-correct { border:2px solid var(--good); background:var(--good-bg); }
+td input[type="text"].is-wrong { border:2px solid var(--bad); background:var(--bad-bg); }
+td input[type="text"].is-neutral { border:2px solid #d6a336; background:var(--neutral-bg); }
+.cell-feedback { display:none; white-space:normal; overflow-wrap:anywhere; margin-top:6px; font-size:13px; line-height:1.35; }
+.cell-feedback.show { display:block; }
+.cell-feedback.good { color:var(--good); }
+.cell-feedback.bad { color:var(--bad); }
+.cell-feedback.neutral { color:var(--neutral); }
+.answer-label { font-weight:800; }
+.report { display:none; margin:16px 0 2px; border-radius:12px; padding:13px 15px; background:var(--soft); border:1px solid #d9ddff; }
+.report.show { display:block; }
+.report strong { font-size:17px; }
+.report p { margin:4px 0 0; }
+.actions { margin:18px 0 2px; }
+.progress { color:var(--muted); font-size:14px; margin-top:12px; }
+.loading, .error { padding:28px 12px; border-radius:14px; text-align:center; background:white; border:1px solid var(--line); }
+.error { color:var(--bad); text-align:left; }
+.small-note { color:var(--muted); font-size:13px; margin-top:12px; }
+.empty { padding:28px; color:var(--muted); text-align:center; }
+@media (max-width:800px) {
+  .wrap { padding:16px 10px 32px; }
+  .toolbar { grid-template-columns:1fr; }
+  .panel { padding:12px; }
+  .panel-head { align-items:flex-start; }
+  .panel-head .actions { margin-top:0; }
+  .group-top { padding:12px; }
+  th, td { padding:7px; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Ôn từ vựng Unit 1–5</h1>
+  <p class="lede">Chọn Unit và phần nhỏ, tự điền bảng rồi nộp bài. Web sẽ báo ô sai, chỉ ra bạn đã điền gì và hiển thị đáp án đúng. Có thể xáo trộn nhóm từ để ôn lại.</p>
+
+  <div class="modebar" role="group" aria-label="Chế độ học">
+    <button type="button" class="btn-primary" id="modePart">Làm theo phần</button>
+    <button type="button" class="btn-secondary" id="modeGroup">Làm từng nhóm</button>
+  </div>
+
+  <div class="toolbar">
+    <select id="unitSelect" aria-label="Chọn Unit"><option value="">Đang tải Unit…</option></select>
+    <select id="partSelect" aria-label="Chọn phần"><option value="">Đang tải phần…</option></select>
+    <input id="searchInput" type="text" placeholder="Lọc theo nghĩa, số từ hoặc từ khóa…" aria-label="Tìm nhóm từ">
+  </div>
+  <div id="loadStatus" class="status">Đang tải dữ liệu từ file JSON…</div>
+  <section id="content" class="panel" aria-live="polite"><div class="loading">Đang tải từ vựng…</div></section>
+</main>
 <script>
-let DATA=[];let mode='part';let currentUnit='ALL',currentPart='ALL',search='';
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function load(){try{const r=await fetch('./tu_vung_unit_1_5_word.json');if(!r.ok)throw Error('HTTP '+r.status);DATA=await r.json();buildUnits();buildParts();render();}catch(e){$('#content').innerHTML='<div class="card empty">Không tải được file JSON. Hãy đặt <b>tu_vung_unit_1_5_word.json</b> cùng thư mục với <b>index.html</b> khi đăng GitHub Pages.</div>';console.error(e)}}
-function buildUnits(){for(const u of DATA.units||[]){let o=document.createElement('option');o.value=u.unit;o.textContent=u.unit;$('#unit').appendChild(o)}}
-function buildParts(){let set=[];for(const u of DATA.units||[]){if(currentUnit!=='ALL'&&u.unit!==currentUnit)continue;for(const p of u.parts||[])set.push(p.part)}set=[...new Set(set)];$('#part').innerHTML='<option value="ALL">Tất cả phần</option>'+set.map(p=>`<option>${esc(p)}</option>`).join('');if(!set.includes(currentPart))currentPart='ALL';$('#part').value=currentPart}
-function allGroups(){let arr=[];for(const u of DATA.units||[]){for(const p of u.parts||[]){for(const g of p.groups||[]){if(!g.tu_chinh)continue;arr.push({unit:u.unit,part:p.part,...g})}}}return arr}
-function filteredGroups(){let q=search.trim().toLowerCase();return allGroups().filter(g=>{if(currentUnit!=='ALL'&&g.unit!==currentUnit)return false;if(currentPart!=='ALL'&&g.part!==currentPart)return false;if(!q)return true;return [g.unit,g.part,g.so,g.tu_chinh.tu,g.tu_chinh.nghia].join(' ').toLowerCase().includes(q)})}
-function row(g,word,i){return `<tr><td><input data-i="${i}" data-k="nhan_am" placeholder="Nhấn âm"></td><td><input data-i="${i}" data-k="loai_tu" placeholder="Loại từ"></td><td><input data-i="${i}" data-k="tu" placeholder="Tự điền từ"></td><td><input data-i="${i}" data-k="nghia" placeholder="Nghĩa tiếng Việt"><div class="cellfeedback"></div></td></tr>`}
-function groupCard(g,gi,formId){let words=[g.tu_chinh,...(g.tu_lien_quan||[])];return `<section class="group" data-group-index="${gi}" data-form="${formId}"><div class="grouphead"><div class="groupno">${g.so!=null?'Từ số '+esc(g.so):'Nhóm từ'} · ${esc(g.unit)} · ${esc(g.part)}</div><div class="meaning">${esc(g.tu_chinh.nghia)}</div><div class="maininfo">Loại từ của từ chính: <b>${esc(g.tu_chinh.loai_tu)}</b></div><div class="hint">Bảng bên dưới để trống. Hãy tự điền để luyện nhớ từ và chính tả.</div></div><div class="tablewrap"><table><thead><tr><th>Nhấn âm</th><th>Loại từ</th><th>Từ</th><th>Nghĩa tiếng Việt của từ liên quan</th></tr></thead><tbody>${words.map((w,i)=>row(g,w,i)).join('')}</tbody></table></div></section>`}
-function getSections(groups){let map=new Map();for(const g of groups){let key=g.unit+'|||'+g.part;if(!map.has(key))map.set(key,{unit:g.unit,part:g.part,groups:[]});map.get(key).groups.push(g)}return [...map.values()]}
-function render(){let gs=filteredGroups();if(mode==='group'){if(!gs.length){$('#content').innerHTML='<div class="card noresult">Không có nhóm từ phù hợp.</div>';return}renderGroupMode(gs);return}renderPartMode(gs)}
-function renderPartMode(gs){let secs=getSections(gs);if(!secs.length){$('#content').innerHTML='<div class="card noresult">Không có phần nào phù hợp.</div>';return}$('#content').innerHTML=secs.map((s,si)=>`<div class="card" data-section="${si}"><div class="parthead"><div><div class="partname">${esc(s.unit)} — ${esc(s.part)}</div><div class="partinfo">${s.groups.length} nhóm từ</div></div><button class="btn primary" onclick="gradeSection(${si})">Nộp bài phần này</button></div><div class="summary" id="summary-${si}"></div>${s.groups.map((g,gi)=>groupCard(g,gi,si)).join('')}<div class="legend">Sau khi nộp, mỗi ô sai sẽ ghi rõ: bạn điền gì → đáp án đúng.</div></div>`).join('');window.__sections=secs}
-function renderGroupMode(gs){let g=gs[0];$('#content').innerHTML=`<div class="card">${groupCard(g,0,'single')}<div class="actions"><button class="btn primary" onclick="gradeSingle()">Chấm nhóm này</button><button class="btn secondary" onclick="nextGroup()">Nhóm tiếp theo →</button></div></div>`;window.__single=gs;}
-function norm(s){return String(s??'').trim().toLowerCase().replace(/\s+/g,' ')}
-function gradeSection(si){let sec=document.querySelectorAll('[data-section]')[si], data=window.__sections[si];let total=0,correct=0,wrongList=[];data.groups.forEach((g,gi)=>{let secBox=sec.querySelectorAll('.group')[gi];let rows=[...secBox.querySelectorAll('tbody tr')];rows.forEach((tr,i)=>{let ans=[g.tu_chinh,...(g.tu_lien_quan||[])][i];let vals=[...tr.querySelectorAll('input')];let expected=[ans.nhan_am||'',ans.loai_tu||'',ans.tu||'',ans.nghia||''];let labels=['Nhấn âm','Loại từ','Từ','Nghĩa tiếng Việt'];vals.forEach((inp,j)=>{total++;let typed=inp.value.trim(),ok=norm(typed)===norm(expected[j])&&!(!typed&&!expected[j]);let fb=inp.parentElement.querySelector('.cellfeedback');inp.classList.remove('correct','wrong');fb.className='cellfeedback '+(ok?'good':'bad');if(ok){correct++;fb.textContent='✓ Đúng';inp.classList.add('correct')}else{inp.classList.add('wrong');fb.textContent=(typed?'Bạn điền: '+typed+' → ':'Chưa điền → ')+'Đúng: '+expected[j];wrongList.push({group:g.so||'',row:i+1,col:labels[j]})}})})});let pct=total?Math.round(correct/total*100):0;let sum=sec.querySelector('.summary');sum.classList.add('show');sum.innerHTML=`<div class="scorebig">Kết quả: ${correct}/${total} ô đúng (${pct}%)</div>${wrongList.length?'<div style="margin-top:6px;color:var(--bad)"><b>Có '+wrongList.length+' ô cần sửa.</b> Xem ngay chữ đỏ dưới từng ô.</div>':'<div style="margin-top:6px;color:var(--good)"><b>Hoàn thành chính xác phần này! 🎉</b></div>'}`;}
-function gradeSingle(){let g=window.__single[0];let box=document.querySelector('.group');let rows=[...box.querySelectorAll('tbody tr')];let total=0,correct=0;rows.forEach((tr,i)=>{let ans=[g.tu_chinh,...(g.tu_lien_quan||[])][i];let vals=[...tr.querySelectorAll('input')];let expected=[ans.nhan_am||'',ans.loai_tu||'',ans.tu||'',ans.nghia||''];vals.forEach((inp,j)=>{total++;let fb=inp.parentElement.querySelector('.cellfeedback');let ok=norm(inp.value)===norm(expected[j])&&!(!inp.value&&!expected[j]);inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok);fb.className='cellfeedback '+(ok?'good':'bad');fb.textContent=ok?'✓ Đúng':(inp.value.trim()?'Bạn điền: '+inp.value.trim()+' → Đúng: '+expected[j]:'Chưa điền → Đúng: '+expected[j]);if(ok)correct++})});let a=document.querySelector('.actions');let old=document.getElementById('singlescore');if(!old){old=document.createElement('div');old.id='singlescore';old.className='summary show';a.before(old)}old.innerHTML=`<div class="scorebig">Kết quả: ${correct}/${total} ô đúng (${total?Math.round(correct/total*100):0}%)</div>`}
-function nextGroup(){if(!window.__single?.length)return;window.__single.push(window.__single.shift());renderGroupMode(window.__single)}
-$('#partMode').onclick=()=>{mode='part';$('#partMode').classList.add('active');$('#groupMode').classList.remove('active');render()};$('#groupMode').onclick=()=>{mode='group';$('#groupMode').classList.add('active');$('#partMode').classList.remove('active');render()};$('#unit').onchange=e=>{currentUnit=e.target.value;buildParts();render()};$('#part').onchange=e=>{currentPart=e.target.value;render()};$('#search').oninput=e=>{search=e.target.value;render()};
-load();
-</script></body></html>
+'use strict';
+const DATA_URL = './tu_vung_unit_1_5_word.json';
+const COLUMNS = [
+  { key:'nhan_am', label:'Nhấn âm', placeholder:'Nhập nhấn âm' },
+  { key:'loai_tu', label:'Loại từ', placeholder:'Nhập loại từ' },
+  { key:'tu', label:'Từ', placeholder:'Tự điền từ' },
+  { key:'nghia', label:'Nghĩa tiếng Việt', placeholder:'Tự điền nghĩa tiếng Việt' }
+];
+const state = {
+  units: [], allGroups: [], currentGroups: [], unit: '', part: '', mode: 'part',
+  query: '', groupIndex: 0, submitted: false, shuffleSeed: 0
+};
+const $ = id => document.getElementById(id);
+const unitSelect = $('unitSelect');
+const partSelect = $('partSelect');
+const searchInput = $('searchInput');
+const content = $('content');
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function normalize(value) {
+  return String(value ?? '')
+    .normalize('NFKC')
+    .replace(/[’‘`]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—−]/g, '-')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLocaleLowerCase('vi');
+}
+function compareCell(input, expected, key) {
+  const entered = input.value;
+  const target = expected == null ? '' : String(expected);
+  if (key === 'nhan_am' && (target === '' || target === '—' || target === '-')) {
+    const n = normalize(entered);
+    return n === '' || n === normalize(target);
+  }
+  return normalize(entered) === normalize(target);
+}
+function flattenGroups() {
+  const groups = [];
+  for (const unit of state.units) {
+    for (const part of (unit.parts || [])) {
+      for (const group of (part.groups || [])) {
+        if (!group.tu_chinh) continue;
+        const rows = [group.tu_chinh, ...(group.tu_lien_quan || [])];
+        groups.push({
+          unit: unit.unit || '', unitTitle: unit.tieu_de || unit.unit || '',
+          part: part.part || 'Chưa phân loại', number: group.so ?? group.tu_chinh.so ?? null,
+          meaning: group.tu_chinh.nghia || '', rows
+        });
+      }
+    }
+  }
+  return groups;
+}
+function unique(values) { return [...new Set(values.filter(Boolean))]; }
+function fillUnitOptions() {
+  unitSelect.innerHTML = '';
+  for (const u of state.units) {
+    const opt = document.createElement('option');
+    opt.value = u.unit; opt.textContent = u.unit;
+    unitSelect.appendChild(opt);
+  }
+  if (!state.unit && state.units.length) state.unit = state.units[0].unit;
+  unitSelect.value = state.unit;
+  fillPartOptions();
+}
+function fillPartOptions() {
+  const u = state.units.find(x => x.unit === state.unit);
+  const parts = (u?.parts || []).map(p => p.part || 'Chưa phân loại');
+  partSelect.innerHTML = '';
+  for (const p of parts) {
+    const opt = document.createElement('option'); opt.value = p; opt.textContent = p;
+    partSelect.appendChild(opt);
+  }
+  if (!parts.includes(state.part)) state.part = parts[0] || '';
+  partSelect.value = state.part;
+}
+function getPartGroups() {
+  const q = normalize(state.query);
+  return state.allGroups.filter(g => {
+    if (g.unit !== state.unit || g.part !== state.part) return false;
+    if (!q) return true;
+    const searchable = [g.number, g.meaning, g.unit, g.part, ...g.rows.flatMap(r => [r.tu,r.nghia,r.loai_tu,r.nhan_am])].join(' ');
+    return normalize(searchable).includes(q);
+  });
+}
+function shuffle(array) {
+  const a = [...array];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function activeGroups() {
+  const partGroups = (state._order && state._order.length === getPartGroups().length) ? state._order : getPartGroups();
+  if (state.mode === 'group') {
+    if (!partGroups.length) return [];
+    state.groupIndex = Math.min(state.groupIndex, partGroups.length - 1);
+    return [partGroups[state.groupIndex]];
+  }
+  return partGroups;
+}
+function renderGroup(group, visibleIndex) {
+  const numberLabel = group.number != null ? `Từ số ${esc(group.number)}` : 'Nhóm từ';
+  const rowsHtml = group.rows.map((row, rowIndex) => `
+    <tr data-row-index="${rowIndex}">
+      ${COLUMNS.map(col => `
+        <td>
+          <input type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+            aria-label="${esc(col.label)} – hàng ${rowIndex + 1}"
+            data-key="${col.key}" data-row="${rowIndex}"
+            placeholder="${esc(col.placeholder)}">
+          <div class="cell-feedback" aria-live="polite"></div>
+        </td>`).join('')}
+    </tr>`).join('');
+  return `
+    <article class="group" data-group-visible-index="${visibleIndex}">
+      <div class="group-top">
+        <div class="group-meta">${numberLabel} · ${esc(group.unit)} · ${esc(group.part)}</div>
+        <div class="group-meaning">${esc(group.meaning || '(Nguồn chưa có nghĩa tiếng Việt)')}</div>
+        <div class="group-instruction">Tự điền tất cả từ/cụm từ liên quan vào các hàng bên dưới.</div>
+      </div>
+      <div class="table-scroller">
+        <table>
+          <thead><tr>${COLUMNS.map(c => `<th scope="col">${esc(c.label)}</th>`).join('')}</tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+    </article>`;
+}
+function render() {
+  const groups = activeGroups();
+  state.currentGroups = groups;
+  state.submitted = false;
+  if (!groups.length) {
+    content.innerHTML = '<div class="empty">Không có nhóm từ phù hợp. Hãy đổi Unit/phần hoặc xóa nội dung tìm kiếm.</div>';
+    $('loadStatus').textContent = 'Không có nhóm từ phù hợp.';
+    return;
+  }
+  const label = state.mode === 'part' ? `${esc(state.unit)} — ${esc(state.part)}` : `${esc(state.unit)} — ${esc(state.part)} — học từng nhóm`;
+  const groupCount = groups.length;
+  content.innerHTML = `
+    <div class="panel-head">
+      <div><h2>${label}</h2><p>${groupCount} nhóm từ trong lượt ôn này</p></div>
+      <div class="actions">
+        <button type="button" class="btn-shuffle" id="shuffleBtn">🔀 Xáo trộn từ vựng</button>
+        <button type="button" class="btn-primary" id="submitBtn">${state.mode === 'part' ? 'Nộp bài phần này' : 'Chấm nhóm này'}</button>
+      </div>
+    </div>
+    ${groups.map(renderGroup).join('')}
+    <div id="report" class="report" role="status"></div>
+    <div class="actions">
+      ${state.mode === 'group' ? '<button type="button" class="btn-secondary" id="prevBtn">← Nhóm trước</button><button type="button" class="btn-secondary" id="nextBtn">Nhóm tiếp →</button>' : ''}
+      <button type="button" class="btn-secondary" id="clearBtn">Xóa câu trả lời</button>
+      <button type="button" class="btn-primary" id="submitBottomBtn">${state.mode === 'part' ? 'Nộp bài phần này' : 'Chấm nhóm này'}</button>
+    </div>
+    <div class="progress">Đang làm ${state.mode === 'part' ? 'theo phần' : `nhóm ${state.groupIndex + 1} / ${Math.max(1, getPartGroups().length)}`} · Sau khi nộp, từng ô sẽ có phản hồi và đáp án đúng.</div>`;
+
+  $('submitBtn').addEventListener('click', submitAnswers);
+  $('submitBottomBtn').addEventListener('click', submitAnswers);
+  $('shuffleBtn').addEventListener('click', shufflePart);
+  $('clearBtn').addEventListener('click', clearAnswers);
+  if ($('prevBtn')) $('prevBtn').addEventListener('click', () => moveGroup(-1));
+  if ($('nextBtn')) $('nextBtn').addEventListener('click', () => moveGroup(1));
+  $('loadStatus').textContent = state.mode === 'part' ? `${groupCount} nhóm từ đang hiển thị.` : `Nhóm ${state.groupIndex + 1} trong ${getPartGroups().length}.`;
+}
+function submitAnswers() {
+  let scored = 0, possible = 0, correctCells = 0, wrongCells = 0, blankCells = 0;
+  const groupEls = [...content.querySelectorAll('.group')];
+  for (let gi = 0; gi < groupEls.length; gi++) {
+    const group = state.currentGroups[gi];
+    const groupEl = groupEls[gi];
+    const rows = [...groupEl.querySelectorAll('tbody tr')];
+    for (let ri = 0; ri < rows.length; ri++) {
+      const expected = group.rows[ri] || {};
+      const inputs = [...rows[ri].querySelectorAll('input[data-key]')];
+      for (const input of inputs) {
+        const key = input.dataset.key;
+        const target = expected[key] == null ? '' : String(expected[key]);
+        const feedback = input.parentElement.querySelector('.cell-feedback');
+        input.classList.remove('is-correct','is-wrong','is-neutral');
+        feedback.className = 'cell-feedback show';
+        const entered = input.value.trim();
+        const notRequiredStress = key === 'nhan_am' && (target === '' || target === '—' || target === '-');
+        if (notRequiredStress && !entered) {
+          input.classList.add('is-neutral');
+          feedback.classList.add('neutral');
+          feedback.innerHTML = 'Nguồn không ghi nhấn âm cho mục này.';
+          continue;
+        }
+        possible++;
+        if (compareCell(input, target, key)) {
+          scored++; correctCells++;
+          input.classList.add('is-correct');
+          feedback.classList.add('good');
+          feedback.innerHTML = '✓ Chính xác';
+        } else {
+          wrongCells++;
+          if (!entered) blankCells++;
+          input.classList.add('is-wrong');
+          feedback.classList.add('bad');
+          const enteredText = entered ? `Bạn điền: <b>${esc(entered)}</b>. ` : '<b>Bạn chưa điền.</b> ';
+          const targetText = target === '' ? '(để trống trong dữ liệu nguồn)' : esc(target);
+          feedback.innerHTML = `${enteredText}<span class="answer-label">Đáp án đúng:</span> <b>${targetText}</b>`;
+        }
+      }
+    }
+  }
+  const pct = possible ? Math.round(scored / possible * 100) : 100;
+  const report = $('report');
+  report.classList.add('show');
+  report.innerHTML = `<strong>Kết quả: ${scored}/${possible} ô đúng (${pct}%).</strong><p>Đúng: ${correctCells} · Sai: ${wrongCells} · Bỏ trống: ${blankCells}. Ô màu đỏ có ghi rõ câu trả lời của bạn và đáp án chuẩn lấy từ file JSON.</p>`;
+  state.submitted = true;
+  report.scrollIntoView({behavior:'smooth',block:'nearest'});
+  $('loadStatus').textContent = `Đã chấm bài: ${pct}% đúng.`;
+}
+function clearAnswers() {
+  content.querySelectorAll('input[data-key]').forEach(input => {
+    input.value = ''; input.classList.remove('is-correct','is-wrong','is-neutral');
+    const fb = input.parentElement.querySelector('.cell-feedback');
+    fb.textContent = ''; fb.className = 'cell-feedback';
+  });
+  const report = $('report');
+  if (report) { report.classList.remove('show'); report.innerHTML = ''; }
+  state.submitted = false;
+}
+function shufflePart() {
+  const partGroups = getPartGroups();
+  if (partGroups.length < 2) {
+    $('loadStatus').textContent = 'Phần này chỉ có một nhóm phù hợp nên chưa thể xáo trộn nhóm.';
+    return;
+  }
+  const shuffled = shuffle(partGroups);
+  // Preserve underlying JSON: shuffle only this temporary practice order.
+  state._order = shuffled;
+  state.shuffleSeed++;
+  state.groupIndex = 0;
+  if (state.mode === 'group') renderGroupMode(shuffled[0]);
+  else renderWithOrder(shuffled);
+  $('loadStatus').textContent = 'Đã xáo trộn thứ tự nhóm từ trong phần này.';
+}
+function renderWithOrder(groups) {
+  state.currentGroups = state.mode === 'group' ? [groups[0]] : groups;
+  state.submitted = false;
+  const shown = state.currentGroups;
+  if (!shown.length) return render();
+  const label = `${esc(state.unit)} — ${esc(state.part)}`;
+  content.innerHTML = `
+    <div class="panel-head"><div><h2>${label}</h2><p>${shown.length} nhóm từ đang hiển thị (đã xáo trộn)</p></div>
+      <div class="actions"><button type="button" class="btn-shuffle" id="shuffleBtn">🔀 Xáo trộn lại</button><button type="button" class="btn-primary" id="submitBtn">${state.mode === 'part' ? 'Nộp bài phần này' : 'Chấm nhóm này'}</button></div>
+    </div>
+    ${shown.map(renderGroup).join('')}
+    <div id="report" class="report" role="status"></div>
+    <div class="actions">
+      ${state.mode === 'group' ? '<button type="button" class="btn-secondary" id="prevBtn">← Nhóm trước</button><button type="button" class="btn-secondary" id="nextBtn">Nhóm tiếp →</button>' : ''}
+      <button type="button" class="btn-secondary" id="clearBtn">Xóa câu trả lời</button><button type="button" class="btn-primary" id="submitBottomBtn">${state.mode === 'part' ? 'Nộp bài phần này' : 'Chấm nhóm này'}</button>
+    </div><div class="progress">Thứ tự nhóm đã được trộn ngẫu nhiên trong trình duyệt; file JSON gốc không bị thay đổi.</div>`;
+  $('submitBtn').addEventListener('click', submitAnswers);
+  $('submitBottomBtn').addEventListener('click', submitAnswers);
+  $('shuffleBtn').addEventListener('click', shufflePart);
+  $('clearBtn').addEventListener('click', clearAnswers);
+  if ($('prevBtn')) $('prevBtn').addEventListener('click', () => moveGroup(-1));
+  if ($('nextBtn')) $('nextBtn').addEventListener('click', () => moveGroup(1));
+}
+function moveGroup(delta) {
+  const navGroups = (state._order && state._order.length === getPartGroups().length) ? state._order : getPartGroups();
+  if (!navGroups.length) return;
+  state.groupIndex = (state.groupIndex + delta + navGroups.length) % navGroups.length;
+  if (state.mode === 'group') renderGroupMode(navGroups[state.groupIndex]);
+  else render();
+}
+function renderGroupMode(group) {
+  state.currentGroups = [group];
+  state.submitted = false;
+  const navGroups = (state._order && state._order.length === getPartGroups().length) ? state._order : getPartGroups();
+  const label = `${esc(state.unit)} — ${esc(state.part)} — học từng nhóm`;
+  content.innerHTML = `
+    <div class="panel-head"><div><h2>${label}</h2><p>Nhóm ${state.groupIndex+1} / ${navGroups.length}</p></div>
+      <div class="actions"><button type="button" class="btn-shuffle" id="shuffleBtn">🔀 Xáo trộn từ vựng</button><button type="button" class="btn-primary" id="submitBtn">Chấm nhóm này</button></div>
+    </div>
+    ${renderGroup(group, 0)}
+    <div id="report" class="report" role="status"></div>
+    <div class="actions"><button type="button" class="btn-secondary" id="prevBtn">← Nhóm trước</button><button type="button" class="btn-secondary" id="nextBtn">Nhóm tiếp →</button><button type="button" class="btn-secondary" id="clearBtn">Xóa câu trả lời</button><button type="button" class="btn-primary" id="submitBottomBtn">Chấm nhóm này</button></div>
+    <div class="progress">Dữ liệu lấy trực tiếp từ file JSON; đáp án không hiển thị trước khi nộp.</div>`;
+  $('submitBtn').addEventListener('click', submitAnswers);
+  $('submitBottomBtn').addEventListener('click', submitAnswers);
+  $('shuffleBtn').addEventListener('click', shufflePart);
+  $('clearBtn').addEventListener('click', clearAnswers);
+  $('prevBtn').addEventListener('click', () => moveGroup(-1));
+  $('nextBtn').addEventListener('click', () => moveGroup(1));
+}
+$('modePart').addEventListener('click', () => {
+  state.mode = 'part'; state.groupIndex = 0;
+  $('modePart').className = 'btn-primary'; $('modeGroup').className = 'btn-secondary';
+  render();
+});
+$('modeGroup').addEventListener('click', () => {
+  state.mode = 'group'; state.groupIndex = 0;
+  $('modePart').className = 'btn-secondary'; $('modeGroup').className = 'btn-primary';
+  render();
+});
+unitSelect.addEventListener('change', () => {
+  state.unit = unitSelect.value; state.part = ''; state.groupIndex = 0; state._order = null;
+  fillPartOptions(); render();
+});
+partSelect.addEventListener('change', () => {
+  state.part = partSelect.value; state.groupIndex = 0; state._order = null; render();
+});
+searchInput.addEventListener('input', () => {
+  state.query = searchInput.value; state.groupIndex = 0; state._order = null; render();
+});
+async function init() {
+  try {
+    const response = await fetch(DATA_URL, {cache:'no-store'});
+    if (!response.ok) throw new Error(`Không tải được JSON (HTTP ${response.status}).`);
+    const data = await response.json();
+    if (!Array.isArray(data.units)) throw new Error('File JSON không có danh sách units hợp lệ.');
+    state.units = data.units;
+    state.allGroups = flattenGroups();
+    if (!state.allGroups.length) throw new Error('Không tìm thấy nhóm từ vựng trong JSON.');
+    fillUnitOptions();
+    render();
+  } catch (err) {
+    $('loadStatus').textContent = 'Không tải được dữ liệu.';
+    content.innerHTML = `<div class="error"><b>Không tải được file từ vựng.</b><p>${esc(err.message)}</p><p>Kiểm tra file <code>tu_vung_unit_1_5_word.json</code> có nằm cùng thư mục với <code>index.html</code> trên GitHub hay không. Nếu mở HTML bằng cách nhấp đúp từ máy tính, hãy chạy qua GitHub Pages hoặc máy chủ local để trình duyệt cho phép fetch JSON.</p></div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>
